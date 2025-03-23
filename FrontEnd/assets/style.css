@@ -219,3 +219,69 @@ footer nav ul {
 	background-color: #1D6154;
 	color: #FFF;
 }
+
+/* MODAL */
+body.overlayed {
+	overflow: hidden;
+	padding-right: 15px;
+}
+
+#modal-overlay {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+#modal-overlay.active {
+	display: flex;
+}
+
+#modal {
+	background-color: #fff;
+	border-radius: 10px;
+	width: 630px;
+}
+
+#modal .modal-head {
+	padding: 26px 30px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.modal-nav {
+	appearance: none;
+	cursor: pointer;
+	border: none;
+	background: transparent;
+}
+
+.modal-nav#close {
+	margin-left: auto;
+}
+
+#modal .modal-main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0 105px 55px;
+}
+
+/* MODAL MODE */
+#modal .modal-main {
+	display: none;
+}
+
+#modal[data-view-mode="gallery"] [data-view="gallery"],
+#modal[data-view-mode="add-work"] [data-view="add-work"] {
+	display: flex;
+}
+
+#modal[data-view-mode="gallery"] button#back {
+	display: none;
+}
