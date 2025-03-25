@@ -1,11 +1,13 @@
+import {fetchWorks, fetchCategories} from './api.js';
+
 // DOM
 const gallery = document.getElementById("main-gallery");
 const filtersContainer = document.getElementById("filters");
 const filtersBtn = filtersContainer.getElementsByClassName('filter');
 
-// FETCHING DATA
-const totalWorksRaw = await fetch("http://localhost:5678/api/works");
-const totalWork = await totalWorksRaw.json();
+//FETCHING
+const totalWork = await fetchWorks();
+const categories = await fetchCategories();
 
 // FUNCTION
 function updateGallery(id) {
@@ -39,10 +41,6 @@ function addCategoryBtn(id, name) {
     filtersContainer.appendChild(catBtn);
 }
 
-// GETTING CATEGORIES
-const categoriesRaw = await fetch("http://localhost:5678/api/categories");
-const categories = await categoriesRaw.json();
-
 filtersContainer.innerHTML = '';
 addCategoryBtn(0, 'Tous');
 
@@ -51,4 +49,4 @@ for(const category of categories) {
 }
 
 // LOAD PAGE
-updateGallery("0");
+updateGallery(0);

@@ -285,3 +285,31 @@ body.overlayed {
 #modal[data-view-mode="gallery"] button#back {
 	display: none;
 }
+
+/* MODALE GALLERY */
+[data-view="gallery"] .modal-content {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 35px 9px;
+}
+
+[data-view="gallery"] .modal-content figure {
+	position: relative;
+}
+
+[data-view="gallery"] .modal-content img {
+	width: 100%;
+}
+
+[data-view="gallery"] .modal-content .delete-img {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background-color: #000;
+	border: none;
+	cursor: pointer;
+}
+
+[data-view="gallery"] .modal-content .delete-img i {
+	color: #fff;
+}
