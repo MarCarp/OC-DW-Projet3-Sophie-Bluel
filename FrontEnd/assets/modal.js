@@ -6,6 +6,8 @@ let modalOpen = false;
 let modalMode = 'gallery';
 
 // DOM
+const workModifier = document.getElementById("work-modifier");
+
 const modalOverlay = document.getElementById('modal-overlay');
 const modal = modalOverlay.querySelector('#modal');
 
@@ -63,6 +65,8 @@ function updateGallery() {
 }
 
 // EVENT LISTENERS
+workModifier.addEventListener('click', ()=>updateModal('open'));
+
 backtn.addEventListener('click', ()=>updateModalView('gallery'));
 closeBtn.addEventListener('click', ()=>updateModal('close'));
 

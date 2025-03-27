@@ -1,3 +1,4 @@
+import { logging } from "./api.js";
 // DOM
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
@@ -7,36 +8,8 @@ const submitBtn = loginForm.querySelector('[type=submit]');
 // FUNCTIONS
 function validateLog(data) {
     sessionStorage.setItem('token', data.token);
-    window.location.href = '/';
-}
-
-async function logging() {
-    const loginBody = {
-        "email": emailInput.value,
-        "password": passwordInput.value
-    };
-
-    const loginData = {
-        method: 'POST',
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify(loginBody)
-    };
-
-    const resp = await fetch('http://localhost:5678/api/users/login', loginData);
-
-    switch(resp.status) {
-        case 200:
-            const data = await resp.json();
-            validateLog(data);
-        break;
-        case 404:
-            console.log("Utilisateur non enregistré");
-        break;
-        case 401:
-            console.log("Mot de passe foireux");
-        break;
-    }
-    
+    sessionStorage.setItem('isLogged', true);
+    window.location.href = '/FrontEnd/';
 }
 
 function formValidation(field) {
@@ -60,11 +33,12 @@ function formValidation(field) {
     return true;
 }
 
-function formSubmit(event) {
+async function formSubmit(event) {
     event.preventDefault();
 
     if(formValidation(emailInput) && formValidation(passwordInput)) {
-        logging();
+        const data = await logging(emailInput.value, passwordInput.value);
+        validateLog(data);
     }
 }
 

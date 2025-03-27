@@ -25,3 +25,32 @@ export async function fetchCategories() {
         return null;
     }
 }
+
+export async function logging(email, password) {
+    const loginBody = {
+        "email": email,
+        "password": password
+    };
+
+    const loginData = {
+        method: 'POST',
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(loginBody)
+    };
+
+    const response = await fetch('http://localhost:5678/api/users/login', loginData);
+
+    switch(response.status) {
+        case 200:
+            const data = await response.json();
+            return data;
+        break;
+        case 404:
+            console.error("Utilisateur non enregistré");
+        break;
+        case 401:
+            console.error("Mot de passe foireux");
+        break;
+    }
+    
+}
