@@ -8,7 +8,7 @@ const submitBtn = loginForm.querySelector('[type=submit]');
 // FUNCTIONS
 function validateLog(data) {
     sessionStorage.setItem('token', data.token);
-    sessionStorage.setItem('isLogged', true);
+    sessionStorage.setItem('logStatus', 'in');
     window.location.href = '/FrontEnd/';
 }
 

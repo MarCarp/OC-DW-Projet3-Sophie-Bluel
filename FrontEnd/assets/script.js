@@ -1,15 +1,16 @@
 import {fetchWorks, fetchCategories} from './api.js';
 
 // VARIABLES
-let isLogged = sessionStorage.getItem('isLogged') ?? false;
+let isLogged = (sessionStorage.getItem('logStatus') === 'in') ? true :  false;
 
 // DOM
 const gallery = document.getElementById("main-gallery");
 const filtersContainer = document.getElementById("filters");
 const filtersBtn = filtersContainer.getElementsByClassName('filter');
-const workModifier = document.getElementById("work-modifier");
-const logLink = document.getElementById("log-link");
 const logout = document.getElementById("logout");
+
+// DOM - UPLOAD WORK
+const addWorkSelect = document.getElementById("add-work-category");
 
 //FETCHING
 const totalWork = await fetchWorks();
@@ -18,17 +19,15 @@ const categories = await fetchCategories();
 // FUNCTION
 function updateView() {
     if(isLogged) {
-        workModifier.classList.add('active');
-        logLink.classList.add('logout');
+        document.body.classList.add("edition");
     } else {
-        workModifier.classList.remove('active');
-        logLink.classList.remove('logout');
+        document.body.classList.remove("edition");
     }
 }
 
 function loginOut() {
     isLogged = false;
-    sessionStorage.setItem("isLogged", false);
+    sessionStorage.setItem("logStatus", 'out');
     sessionStorage.removeItem('token');
     updateView();
 }
@@ -64,15 +63,25 @@ function addCategoryBtn(id, name) {
     filtersContainer.appendChild(catBtn);
 }
 
+function addWorkCategory(id, name) {
+    const selectOption = document.createElement('option');
+    selectOption.value = id;
+    selectOption.innerText = name;
+    addWorkSelect.appendChild(selectOption);
+}
+
+
+
 filtersContainer.innerHTML = '';
 addCategoryBtn(0, 'Tous');
 
 for(const category of categories) {
-    addCategoryBtn(category.id, category.name)
+    addCategoryBtn(category.id, category.name);
+    addWorkCategory(category.id, category.name);
 }
 
 // EVENT LISTENER
-logout.addEventListener("click", loginOut)
+logout.addEventListener("click", loginOut);
 
 // LOAD PAGE
 updateGallery(0);

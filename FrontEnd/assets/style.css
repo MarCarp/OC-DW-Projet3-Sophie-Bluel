@@ -107,15 +107,6 @@ li:hover {
 	color: #B1663C;
 	cursor: pointer;
 }
-/* LOGIN / LOGOUT */
-#log-link #logout,
-#log-link.logout #login {
-	display: none;
-}
-#log-link.logout #logout,
-#log-link #login {
-	display: inline-block;
-}
 #introduction {
 	display: flex;
 	align-items: center;
@@ -148,22 +139,16 @@ li:hover {
 	position: relative;
 }
 #portfolio #work-modifier {
-	display: none;
-}
-#portfolio #work-modifier.active {
-	display: flex;
-}
-#portfolio h2 .logged {
 	position: absolute;
 	left: 100%;
 	top: 50%;
 	transform: translateY(-50%);
-    color: #000;
-    font-size: 14px;
+	color: #000;
+	font-size: 14px;
 	font-weight: 400;
 	cursor: pointer;
 }
-#portfolio h2 .logged i {
+#portfolio #work-modifier i {
 	padding-right: 12px;
 	margin-left: 20px;
 }
@@ -199,7 +184,8 @@ margin: auto;
 	flex-direction: column;
 }
 
-.general-form input {
+.general-form input,
+.general-form select {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
@@ -215,7 +201,7 @@ margin: auto;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"]{
+input[type="submit"] {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -223,7 +209,13 @@ input[type="submit"]{
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
-	border-radius: 60px ;
+	border-radius: 60px;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+
+input[type="submit"]:hover {
+	background-color: #0E2F28;
 }
 
 footer nav ul {
@@ -251,6 +243,12 @@ footer nav ul {
 	border-radius: 25px;
 	color: #1D6154;
 	padding: 10px 15px;
+	transition: all 0.3s;
+}
+
+#filters button:not(.active):hover {
+	color: #0E2F28;
+	border-color: #0E2F28;
 }
 
 #filters button.active {
@@ -303,11 +301,23 @@ body.overlayed {
 	margin-left: auto;
 }
 
+
+#modal .modal-title {
+	font-family: 'Work Sans', Arial, sans-serif;
+	font-size: 26px;
+	font-weight: 400;
+	color: #000;
+}
+
 #modal .modal-main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 0 105px 55px;
+}
+
+#modal .modal-content {
+	margin: 50px auto;
 }
 
 /* MODAL MODE */
@@ -324,7 +334,7 @@ body.overlayed {
 	display: none;
 }
 
-/* MODALE GALLERY */
+/* MODAL GALLERY */
 [data-view="gallery"] .modal-content {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
@@ -350,4 +360,143 @@ body.overlayed {
 
 [data-view="gallery"] .modal-content .delete-img i {
 	color: #fff;
+}
+
+/* MODAL ADD-WORK */
+[data-view="add-work"]  .modal-content {
+	width: 100%;
+}
+[data-view="add-work"] .add-img-container {
+	box-sizing: border-box;
+	background-color: #E8F1F6;
+	border-radius: 5px;
+	padding: 20px;
+	width: 100%;
+}
+
+[data-view="add-work"] .add-img-container i {
+	color: #B9C5CC;
+	font-size: 76px;
+	margin-bottom: 6px;
+}
+
+[data-view="add-work"] .add-img-container #upload-work {
+	display: none;
+}
+
+/* PREVIEW IMG */
+[data-view="add-work"] .add-img-container .uploader-group {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+[data-view="add-work"] .add-img-container.preview {
+	padding: 0;
+}
+
+[data-view="add-work"] .add-img-container.preview .uploader-group {
+	display: none;
+}
+
+[data-view="add-work"] .add-img-container img{
+	max-width: 190px;
+	max-height: 190px;
+	object-fit: contain;
+}
+[data-view="add-work"] .add-img-container label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 500;
+	color: #306685;
+	background-color: #CBD6DC;
+	border-radius: 18px;
+	width: 175px;
+	height: 35px;
+	cursor: pointer;
+}
+
+[data-view="add-work"] .add-img-container .desc {
+	color: #444444;
+	font-size: 12px;
+	margin-top: 8px;
+}
+
+[data-view="add-work"] .general-form {
+	width: 100%;
+}
+
+[data-view="add-work"] .input-container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+[data-view="add-work"] .input-container input,
+[data-view="add-work"] .input-container select {
+	width: 100%;
+}
+
+/* MODAL BTN */
+.modal-btn {
+	border-top: 1px solid #B3B3B3;
+	padding-top: 38px;
+	width: 100%;
+	text-align: center;
+}
+
+.modal-btn button {
+	appearance: none;
+	border: none;
+	cursor: pointer;
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 14px;
+	color: #fff;
+	background-color: #1D6154;
+	height: 50px;
+	width: 260px;
+	border-radius: 50px;
+	transition: all 0.3s;
+}
+
+.modal-btn button:hover {
+	background-color: #0E2F28;
+}
+
+/* EDITOR MODE */
+body:not(.edition) #logout,
+body.edition #login,
+body.edition #logout,
+body:not(.edition) #login,
+body:not(.edition) #work-modifier  {
+	display: none;
+}
+
+body:not(.edition) #login,
+body.edition #logout {
+	display: block;
+}
+
+body.edition #work-modifier,
+body.edition #edition-banner {
+	display: flex;
+}
+
+#edition-banner {
+	position: absolute;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	height: 60px;
+	width: 100%;
+	background-color: #000;
+	color: #fff;
+}
+
+body.edition {
+	padding-top: 60px;
 }

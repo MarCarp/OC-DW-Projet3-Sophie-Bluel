@@ -17,6 +17,10 @@ const backtn = modal.querySelector('#back');
 const closeBtn = modal.querySelector('#close');
 const addWorkBtn = modal.querySelector('#add-work-btn');
 
+// DOM - UPLOAD WORK
+const imgUploadContainer = document.querySelector('[data-view="add-work"] .add-img-container');
+const imgUploadBtn = imgUploadContainer.querySelector('#upload-work');
+
 //FUNCTIONS
 function updateModalView(view) {
     switch(view) {
@@ -43,6 +47,7 @@ function updateModal(action) {
             modalOpen = false;
             document.body.classList.remove('overlayed');
             modalOverlay.classList.remove('active');
+            clearUpload();
             updateModalView('gallery');
         break;
         case 'switch':
@@ -64,6 +69,23 @@ function updateGallery() {
     }
 }
 
+function uploadPreview() {
+    console.dir(imgUploadBtn.files[0]);
+    //CHECK THE FILE
+    const preview = document.createElement('img');
+    preview.src = URL.createObjectURL(imgUploadBtn.files[0]);
+    preview.id = 'upload-preview';
+    imgUploadContainer.classList.add('preview');
+    imgUploadContainer.appendChild(preview);
+}
+
+function clearUpload() {
+    document.getElementById('upload-preview').remove();
+    console.dir(imgUploadBtn.value);
+    imgUploadBtn.value = '';
+    imgUploadContainer.classList.remove('preview');
+}
+
 // EVENT LISTENERS
 workModifier.addEventListener('click', ()=>updateModal('open'));
 
@@ -79,11 +101,7 @@ modalOverlay.addEventListener('click', (event)=>{
     }
 });
 
-document.addEventListener('keydown', (e)=>{
-    if(e.code === "Numpad0") {
-        updateModal('open');
-    }
-});
+imgUploadBtn.addEventListener("change", uploadPreview);
 
 
 //LOAD

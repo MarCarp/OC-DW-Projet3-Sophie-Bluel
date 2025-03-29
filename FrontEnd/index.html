@@ -17,6 +17,9 @@
     <script type="module" src="./assets/modal.js"></script>
 </head>
 <body>
+    <div id="edition-banner">
+        <span><i class="fa-solid fa-pen-to-square"></i>Mode édition</span>
+    </div>
     <header>
         <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
         <nav>
@@ -135,7 +138,22 @@
             <div class="modal-main" data-view="add-work">
                 <h2 class="modal-title">Ajout photo</h2>
                 <div class="modal-content">
-
+                    <form class="general-form">
+                        <div class="add-img-container">
+                            <div class="uploader-group">
+                                <input id="upload-work" type="file" accept="image/png, image/jpeg">
+                                <i class="fa-regular fa-image"></i>
+                                <label for="upload-work">+ Ajouter photo</label>
+                                <p class="desc">jpg, png : 4mo max</p>
+                            </div>
+                        </div>
+                        <div class="input-container">
+                            <label for="add-work-category">Titre</label>
+                            <input type="text" name="title" id="add-work-title">
+                            <label for="add-work-category">Catégorie</label>
+                            <select name="category" id="add-work-category"></select>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-btn">
                     <button id="send-work-btn">Valider</button>
