@@ -39,18 +39,5 @@ export async function logging(email, password) {
     };
 
     const response = await fetch('http://localhost:5678/api/users/login', loginData);
-
-    switch(response.status) {
-        case 200:
-            const data = await response.json();
-            return data;
-        break;
-        case 404:
-            console.error("Utilisateur non enregistré");
-        break;
-        case 401:
-            console.error("Mot de passe foireux");
-        break;
-    }
-    
+    return response;
 }

@@ -186,14 +186,32 @@ margin: auto;
 
 .general-form input,
 .general-form select {
+	padding: 0 15px;
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+.general-form input.error,
+.general-form select.error {
+	animation: 1s errorFadeOut linear;
+	color: red;
+}
+
 .general-form label {
 	margin: 2em 0 1em 0;
+}
+
+.general-form .error-msg {
+	color: red;
+	height: 12px;
+	margin: 8px 0;
+	font-size: 12px;
+}
+
+.general-form .error-msg+label {
+	margin-top: 0;
 }
 
 .general-form textarea {
@@ -499,4 +517,12 @@ body.edition #edition-banner {
 
 body.edition {
 	padding-top: 60px;
+}
+
+@keyframes errorFadeOut {
+	from {
+		box-shadow: 0px 4px 14px rgba(255, 0, 0, 1);
+	}to{
+		box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	}
 }
