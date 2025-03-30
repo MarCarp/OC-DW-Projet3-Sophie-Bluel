@@ -7,30 +7,17 @@ function checkToken() {
     }
 }
 
-export async function fetchWorks() {
+async function fetchAPI(element) {
+    console.log("CALL ON API");
     try {
-        const response = await fetch("http://localhost:5678/api/works");
+        const response = await fetch(`http://localhost:5678/api/${element}`);
         if (!response.ok) {
           throw new Error(`Erreur API : ${response.status}`);
         }
         const data = await response.json();
         return data;
     } catch (err) {
-        console.error("Erreur lors du fetch des travaux :", err);
-        return null;
-    }
-}
-
-export async function fetchCategories() {
-    try {
-        const response = await fetch("http://localhost:5678/api/categories");
-        if(!response.ok) {
-            throw new Error(`Erreur API : ${response.status}`);
-        }
-        const data = await response.json();
-        return data;
-    } catch (err) {
-        console.error("Erreur lors de la récupération des catégories : ", err);
+        console.error(`Erreur lors du fetch de l'élément ${element} :`, err);
         return null;
     }
 }
@@ -91,3 +78,18 @@ export async function sendWork(imgFile, title, cat) {
         console.error('Error:', error);
     }
 }
+
+//CACHE FETCH
+// FETCHABLE ELEMENTS [works, categories]
+export async function customFetch(element) {
+    let data = sessionStorage.getItem(element);
+    console.log("CALL ON CACHE");
+    if(!data) {
+        data = await fetchAPI(element);
+        sessionStorage.setItem(element, JSON.stringify(data));
+    } else {
+        data = JSON.parse(data);
+    }
+    return data;
+}
+

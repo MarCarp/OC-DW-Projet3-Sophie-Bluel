@@ -88,6 +88,7 @@ function uploadPreview() {
 
 function trashWork(id) {
     deleteWork(id);
+    updateGallery();
 }
 
 function clearUpload() {
@@ -112,6 +113,7 @@ function uploadValidation() {
         console.log("pas de titre");
     }else {
         sendWork(uploadedImg, uploadTitle.value, uploadCategory.value);
+        updateGallery();
     }
 }
 
