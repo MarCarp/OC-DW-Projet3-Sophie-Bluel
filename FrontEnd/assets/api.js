@@ -1,3 +1,12 @@
+function checkToken() {
+    const token = sessionStorage.getItem('token');
+    if(!token) {
+        console.log("pas de token");
+    } else {
+        return token;
+    }
+}
+
 export async function fetchWorks() {
     try {
         const response = await fetch("http://localhost:5678/api/works");
@@ -40,4 +49,45 @@ export async function logging(email, password) {
 
     const response = await fetch('http://localhost:5678/api/users/login', loginData);
     return response;
+}
+
+export async function deleteWork(id) {
+    const token = checkToken();
+    if(token) {
+        const data = {
+            method: 'DELETE',
+            headers : {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+        console.log(data);
+        const response = await fetch(`http://localhost:5678/api/works/${id}`, data);
+        console.log(response);
+    }
+    
+}
+
+export async function sendWork(imgFile, title, cat) {
+    const formData = new FormData();
+    formData.append('image', imgFile, imgFile.name);
+    formData.append('title', title);
+    formData.append('category', cat);
+
+    const token = checkToken();
+    try {
+        const response = await fetch('http://localhost:5678/api/works', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('Success:', data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }

@@ -454,6 +454,7 @@ body.overlayed {
 [data-view="add-work"] .input-container input,
 [data-view="add-work"] .input-container select {
 	width: 100%;
+	box-sizing: border-box;
 }
 
 /* MODAL BTN */
