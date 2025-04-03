@@ -1,12 +1,58 @@
-import { customFetch } from "./api.js";
+import { customFetch, deleteWork, refreshAPI } from "./api.js";
 //DOM
 const mainGallery = document.getElementById("main-gallery");
 const filtersContainer = document.getElementById("filters");
-const filtersBtn = filtersContainer.getElementsByClassName('filter');
-
+//DOM - MODAL
+const modalGallery = modal.querySelector('[data-view="gallery"] .modal-content');
+const addWorkSelect = document.getElementById("add-work-category");
 //FETCH
-const categories = await customFetch('categories');
-const works = await customFetch('works');
+let categories = await customFetch('categories');
+let works = await customFetch('works');
+//TOSORT!!!!!!!!!
+function addWorkCategory(id, name) {
+    const selectOption = document.createElement('option');
+    selectOption.value = id;
+    selectOption.innerText = name;
+    addWorkSelect.appendChild(selectOption);
+}
+
+async function refreshFetch(element) {
+    await refreshAPI(element);
+    switch(element){
+        case 'works':
+            works = await customFetch(element);
+        break;
+        case 'categories':
+            categories = await customFetch(element);
+        break;
+    }
+}
+
+//MODAL
+export function updateModalGallery() {
+    //BAD ! REFACTO
+    refreshFetch('works');
+    //!!!!
+    modalGallery.innerHTML = '';
+    for(const work of works) {
+        const figure = document.createElement('figure');
+        const imgFigure = document.createElement('img');
+        const trashBtn = document.createElement('button');
+        imgFigure.src = work.imageUrl;
+        imgFigure.alt = work.title;
+        trashBtn.classList.add('delete-img');
+        trashBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
+        trashBtn.addEventListener('click', ()=>{
+            deleteWork(work.id);
+            //refreshFetch('works');
+            updateGallery(0);
+            updateModalGallery();
+        });
+        figure.appendChild(imgFigure);
+        figure.appendChild(trashBtn);
+        modalGallery.appendChild(figure);
+    }
+}
 
 //PAGE MODE
 export function viewMode() {
@@ -42,6 +88,9 @@ export function filterGallery(id) {
 }
 
 export function updateGallery(id) {
+    //BAD ! REFACTO
+    refreshFetch('works');
+    //!!!!
     //EMPTY THE GALLERY
     mainGallery.innerHTML = '';
     //REFILLING THE GALLERY
@@ -64,6 +113,6 @@ export function buildCategoriesFilter() {
     filtersContainer.querySelector('.filter').classList.add('active');
     for(const category of categories) {
         categoryBtn(category.id, category.name);
-        /*addWorkCategory(category.id, category.name);*/
+        addWorkCategory(category.id, category.name);
     }
 }

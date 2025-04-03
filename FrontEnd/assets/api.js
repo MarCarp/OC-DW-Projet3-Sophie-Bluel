@@ -80,6 +80,13 @@ export async function sendWork(imgFile, title, cat) {
 }
 
 //CACHE FETCH
+//REFRESH CACHE
+export async function refreshAPI(element) {
+    const data = await fetchAPI(element);
+    sessionStorage.removeItem(element);
+    sessionStorage.setItem(element, JSON.stringify(data));
+}
+
 // FETCHABLE ELEMENTS [works, categories]
 export async function customFetch(element) {
     let data = sessionStorage.getItem(element);

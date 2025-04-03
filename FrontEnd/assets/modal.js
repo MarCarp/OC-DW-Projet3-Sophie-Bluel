@@ -1,5 +1,5 @@
-import { fetchWorks, sendWork, deleteWork } from "./api.js";
-const works = await fetchWorks();
+import { sendWork } from "./api.js";
+import { updateGallery, updateModalGallery } from "./view.js";
 
 // VARIABLES
 let modalOpen = false;
@@ -11,7 +11,6 @@ const workModifier = document.getElementById("work-modifier");
 const modalOverlay = document.getElementById('modal-overlay');
 const modal = modalOverlay.querySelector('#modal');
 
-const modalGallery = modal.querySelector('[data-view="gallery"] .modal-content');
 
 const backtn = modal.querySelector('#back');
 const closeBtn = modal.querySelector('#close');
@@ -61,22 +60,6 @@ function updateModal(action) {
     }
 }
 
-function updateGallery() {
-    for(const work of works) {
-        const figure = document.createElement('figure');
-        const imgFigure = document.createElement('img');
-        const trashBtn = document.createElement('button');
-        imgFigure.src = work.imageUrl;
-        imgFigure.alt = work.title;
-        trashBtn.classList.add('delete-img');
-        trashBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
-        trashBtn.addEventListener('click', ()=>trashWork(work.id));
-        figure.appendChild(imgFigure);
-        figure.appendChild(trashBtn);
-        modalGallery.appendChild(figure);
-    }
-}
-
 function uploadPreview() {
     //CHECK THE FILE
     const preview = document.createElement('img');
@@ -84,11 +67,6 @@ function uploadPreview() {
     preview.id = 'upload-preview';
     imgUploadContainer.classList.add('preview');
     imgUploadContainer.appendChild(preview);
-}
-
-function trashWork(id) {
-    deleteWork(id);
-    updateGallery();
 }
 
 function clearUpload() {
@@ -106,14 +84,16 @@ function uploadValidation() {
     const uploadedImg = imgUploadBtn.files[0];
     if(!uploadedImg) {
         console.log("doit y avoir une image");
-    }else if (uploadedImg.size/1000000 > 4) {
+    } else if (uploadedImg.size/1000000 > 4) {
         console.log("img trop grande");
     }
     else if(uploadTitle === '') {
         console.log("pas de titre");
-    }else {
+    } else {
         sendWork(uploadedImg, uploadTitle.value, uploadCategory.value);
-        updateGallery();
+        updateGallery(0);
+        updateModalGallery();
+        updateModal('close');
     }
 }
 
@@ -137,4 +117,4 @@ sendWorkBtn.addEventListener('click', uploadValidation);
 
 
 //LOAD
-updateGallery();
+updateModalGallery();
