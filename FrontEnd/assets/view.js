@@ -1,4 +1,5 @@
-import { customFetch, deleteWork, refreshAPI } from "./api.js";
+import { customFetch, deleteWork } from "./api.js";
+import { updateModal } from "./modal.js";
 //DOM
 const mainGallery = document.getElementById("main-gallery");
 const filtersContainer = document.getElementById("filters");
@@ -16,23 +17,8 @@ function addWorkCategory(id, name) {
     addWorkSelect.appendChild(selectOption);
 }
 
-async function refreshFetch(element) {
-    await refreshAPI(element);
-    switch(element){
-        case 'works':
-            works = await customFetch(element);
-        break;
-        case 'categories':
-            categories = await customFetch(element);
-        break;
-    }
-}
-
 //MODAL
 export function updateModalGallery() {
-    //BAD ! REFACTO
-    refreshFetch('works');
-    //!!!!
     modalGallery.innerHTML = '';
     for(const work of works) {
         const figure = document.createElement('figure');
@@ -42,16 +28,22 @@ export function updateModalGallery() {
         imgFigure.alt = work.title;
         trashBtn.classList.add('delete-img');
         trashBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
-        trashBtn.addEventListener('click', ()=>{
-            deleteWork(work.id);
-            //refreshFetch('works');
+        trashBtn.addEventListener('click', async ()=>{
+            await deleteWork(work.id);
+            refreshWorks();
             updateGallery(0);
             updateModalGallery();
+            updateModal('close');
         });
         figure.appendChild(imgFigure);
         figure.appendChild(trashBtn);
         modalGallery.appendChild(figure);
     }
+}
+
+export function refreshWorks() {
+    const worksRaw = sessionStorage.getItem('works');
+    works = JSON.parse(worksRaw);
 }
 
 //PAGE MODE
@@ -88,9 +80,6 @@ export function filterGallery(id) {
 }
 
 export function updateGallery(id) {
-    //BAD ! REFACTO
-    refreshFetch('works');
-    //!!!!
     //EMPTY THE GALLERY
     mainGallery.innerHTML = '';
     //REFILLING THE GALLERY

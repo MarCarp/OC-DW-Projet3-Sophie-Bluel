@@ -8,7 +8,7 @@ function checkToken() {
 }
 
 async function fetchAPI(element) {
-    console.log("CALL ON API");
+    console.log("CALL ON API");
     try {
         const response = await fetch(`http://localhost:5678/api/${element}`);
         if (!response.ok) {
@@ -47,9 +47,8 @@ export async function deleteWork(id) {
                 'Authorization': `Bearer ${token}`
             }
         }
-        console.log(data);
         const response = await fetch(`http://localhost:5678/api/works/${id}`, data);
-        console.log(response);
+        await refreshCache('works');
     }
     
 }
@@ -73,6 +72,7 @@ export async function sendWork(imgFile, title, cat) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
+        await refreshCache('works');
         console.log('Success:', data);
     } catch (error) {
         console.error('Error:', error);
@@ -81,8 +81,9 @@ export async function sendWork(imgFile, title, cat) {
 
 //CACHE FETCH
 //REFRESH CACHE
-export async function refreshAPI(element) {
-    const data = await fetchAPI(element);
+async function refreshCache(element) {
+    const response = await fetch('http://localhost:5678/api/works');
+    const data = await response.json();
     sessionStorage.removeItem(element);
     sessionStorage.setItem(element, JSON.stringify(data));
 }

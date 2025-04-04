@@ -1,5 +1,5 @@
 import { sendWork } from "./api.js";
-import { updateGallery, updateModalGallery } from "./view.js";
+import { updateGallery, updateModalGallery, refreshWorks } from "./view.js";
 
 // VARIABLES
 let modalOpen = false;
@@ -38,7 +38,7 @@ function updateModalView(view) {
     modal.dataset.viewMode = modalMode;
 }
 
-function updateModal(action) {
+export function updateModal(action) {
     switch(action) {
         case 'open':
             modalOpen = true;
@@ -80,7 +80,7 @@ function clearUpload() {
     uploadCategory.value = '1';
 }
 
-function uploadValidation() {
+async function uploadValidation() {
     const uploadedImg = imgUploadBtn.files[0];
     if(!uploadedImg) {
         console.log("doit y avoir une image");
@@ -90,7 +90,8 @@ function uploadValidation() {
     else if(uploadTitle === '') {
         console.log("pas de titre");
     } else {
-        sendWork(uploadedImg, uploadTitle.value, uploadCategory.value);
+        await sendWork(uploadedImg, uploadTitle.value, uploadCategory.value);
+        refreshWorks();
         updateGallery(0);
         updateModalGallery();
         updateModal('close');
@@ -117,4 +118,4 @@ sendWorkBtn.addEventListener('click', uploadValidation);
 
 
 //LOAD
-updateModalGallery();
+document.addEventListener('DOMContentLoaded', updateModalGallery);
