@@ -13,7 +13,6 @@
     <meta name="description" content="">
     <link rel="stylesheet" href="./assets/style.css">
     <script type="module" src="./assets/main.js"></script>
-    <script type="module" src="./assets/modal.js"></script>
 </head>
 <body>
     <div id="edition-banner">
@@ -43,7 +42,7 @@
             </article>
         </section>
         <section id="portfolio">
-           <h2>Mes Projets<span id="work-modifier" class="logged"><i class="fa-solid fa-pen-to-square"></i>modifier</span></h2>
+           <h2>Mes Projets<span id="modal-gallery-btn" class="logged"><i class="fa-solid fa-pen-to-square"></i>modifier</span></h2>
            <nav id="filters">
                 <button class="filter">Tous</button>
                 <button class="filter">Objets</button>
@@ -146,9 +145,11 @@
                                 <p class="desc">jpg, png : 4mo max</p>
                             </div>
                         </div>
+                        <p class="error-msg" data-error-msg="upload-work"></p>
                         <div class="input-container">
                             <label for="add-work-category">Titre</label>
                             <input type="text" name="title" id="add-work-title">
+                            <p class="error-msg" data-error-msg="upload-work"></p>
                             <label for="add-work-category">Catégorie</label>
                             <select name="category" id="add-work-category"></select>
                         </div>
