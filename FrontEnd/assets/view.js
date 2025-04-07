@@ -1,7 +1,6 @@
 import { customFetch, deleteWork } from "./api.js";
 
 ///////////////////// VARIABLES ///////////////////
-let modalOpen = false;
 let modalMode = 'gallery';
 
 //////////////////////// DOM //////////////////////
@@ -86,10 +85,9 @@ export function updateGallery(id) {
     for(const work of works) {
         if(parseInt(id) === 0 || work.categoryId === parseInt(id)) {
             const workToAdd = document.createElement('figure');
-            workToAdd.innerHTML = `<figure>
+            workToAdd.innerHTML = `
             <img src="${work.imageUrl}" alt="${work.title}" />
-            <figcaption>${work.title}</figcaption>
-            </figure>`;
+            <figcaption>${work.title}</figcaption>`;
             mainGallery.appendChild(workToAdd);
         }
     }
@@ -98,6 +96,7 @@ export function updateGallery(id) {
 // FUNCTIONS - MODAL
 //MANAGE THE MODAL OPENING/CLOSING VIEW
 export function modalStatus(action) {
+    let modalOpen = false;
     switch(action) {
         case 'open':
             modalOpen = true;
@@ -184,7 +183,7 @@ function clearUpload() {
     uploadCategory.value = '1';
 }
 
-export function sendWorkSuccess() {
+export function sendWorkDone() {
     refreshWorks();
     updateGallery(0);
     updateModalGallery();
@@ -192,7 +191,7 @@ export function sendWorkSuccess() {
 }
 
 ///////////////////// PAGE LOAD ///////////////////
-export function loadMain() {
+export async function loadMain() {
     //PAGE BUILDING
     // //CHECK IF LOGGED INE
     viewMode();

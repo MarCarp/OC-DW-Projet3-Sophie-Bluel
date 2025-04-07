@@ -1,4 +1,4 @@
-import { loadMain, viewMode, modalStatus, modalNav, uploadPreview } from './view.js';
+import { loadMain, viewMode, modalStatus, modalNav, uploadPreview, sendWorkDone } from './view.js';
 import { uploadValidation } from './controller.js';
 
 //////////////////////// DOM //////////////////////
@@ -44,9 +44,10 @@ addWorkBtn.addEventListener('click', ()=>modalNav('add-work'));
 // EL - LOAD IMG PREVIEW
 imgUploadBtn.addEventListener("change", uploadPreview);
 // EL - UPLOAD BTN
-sendWorkBtn.addEventListener('click', ()=>uploadValidation(imgUploadBtn, uploadTitle, uploadCategory));
+sendWorkBtn.addEventListener('click', async ()=>{
+    await uploadValidation(imgUploadBtn, uploadTitle, uploadCategory);
+    sendWorkDone();
+});
 
 ///////////////////// LOAD PAGE ///////////////////
-document.addEventListener('DOMContentLoaded', ()=>{
-    loadMain();
-});
+loadMain();

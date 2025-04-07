@@ -22,7 +22,7 @@ async function formSubmit(event) {
             const parsedData = await data.json();
             loginSuccess(parsedData);
         } else {
-            showErrMsg(emailInput, "Identifiant ou mot de passe incorrect");
+            showErrMsg(submitBtn, "Identifiant ou mot de passe incorrect");
         }
     }
 }

@@ -1,32 +1,42 @@
 import { sendWork } from "./api.js";
-import { sendWorkSuccess } from "./view.js";
 
 export function showErrMsg(input, msg) {
     // Find Message Box
     let msgBox = input.nextElementSibling;
     if(!msgBox.classList.contains('error-msg')) {
-        console.log("yapa");
         msgBox = document.querySelector(`[data-error-msg=${input.id}]`);
     }
     if(input.classList.contains('error')) {
         input.classList.remove('error');
     }
-    input.classList.add('error');
-    if(msgBox) {
-        msgBox.innerText = msg;
+
+    msgBox.innerText = msg;
+    if(input.type !== "submit") {
+        input.classList.add('error');
+        //CLEAN ERROR MSG ON INPUT CHANGE
+        if(!input.classList.contains('evented')) {
+            input.addEventListener('input', ()=>{
+                input.classList.remove('error');
+                if(msgBox && msgBox!=='') {
+                    msgBox.innerText = '';
+                }
+            })
+        }
+        input.classList.add('evented');
     } else {
-        console.log(msg);
-    }
-    //CLEAN ERROR MSG ON INPUT CHANGE
-    if(!input.classList.contains('evented')) {
-        input.addEventListener('input', ()=>{
-            input.classList.remove('error');
-            if(msgBox && msgBox!=='') {
-                msgBox.innerText = '';
+        // CLEAR ERROR MSG OF INPUT CHANGE (LOGIN CASE)
+        const allInput = document.querySelectorAll("input:not([type=submit]");
+        for(input of allInput){
+            if(!input.classList.contains('evented-submit')) {
+                input.addEventListener('input', ()=>{
+                    if(msgBox && msgBox!=='') {
+                        msgBox.innerText = '';
+                    }
+                });
             }
-        })
+            input.classList.add('evented-submit');
+        }
     }
-    input.classList.add('evented');
 }
 
 export function inputValidator(field) {
@@ -63,7 +73,7 @@ export async function uploadValidation(img, title, cat) {
     else if(title.value === '') {
         showErrMsg(title, "Pas de titre ?");
     } else {
-        await sendWork(uploadedImg, title.value, cat.value);
-        sendWorkSuccess();
+        const success = await sendWork(uploadedImg, title.value, cat.value);
+        return success;
     }
 }

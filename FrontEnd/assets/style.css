@@ -96,6 +96,7 @@ nav li {
 }
 
 nav li a {
+	color: #000;
 	text-decoration: none;
 }
 
@@ -103,7 +104,8 @@ nav li.active {
 	font-weight: 600;
 }
 
-li:hover {
+li:hover,
+nav li a:hover {
 	color: #B1663C;
 	cursor: pointer;
 }
@@ -151,6 +153,10 @@ li:hover {
 #portfolio #modal-gallery-btn i {
 	padding-right: 12px;
 	margin-left: 20px;
+}
+
+#main-gallery figure {
+	text-align: left;
 }
 
 .gallery {
@@ -234,6 +240,13 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
 	background-color: #0E2F28;
+}
+
+#login input[type="submit"] {
+	margin-bottom: 0;
+}
+#login input[type="submit"]+.error-msg {
+	text-align: center;
 }
 
 footer nav ul {

@@ -6,10 +6,19 @@ async function fetchAPI(element, dataSend) {
                 console.log("Success");
                 return response;
             break;
+            case 201:
+                console.log("Data succefully Sent");
+            break;
+            case 204:
+                console.log("Data succefully Deleted");
+                return response;
+            break;
             case 404:
                 console.log("Non identifé");
+                return response;
             case 401:
                 console.log("Non autorisé");
+                return response;
             default:
                 throw new Error(`Erreur API : ${response.status}`);
             break;
@@ -94,7 +103,7 @@ export async function customFetch(element) {
     if(!data) {
         console.log("CALL ON API");
         const response = await fetchAPI(element);
-        const data = await response.json();
+        data = await response.json();
         sessionStorage.setItem(element, JSON.stringify(data));
     } else {
         console.log("CALL ON CACHE");
