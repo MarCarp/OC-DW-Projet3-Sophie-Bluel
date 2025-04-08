@@ -8,6 +8,7 @@ async function fetchAPI(element, dataSend) {
             break;
             case 201:
                 console.log("Data succefully Sent");
+                return response;
             break;
             case 204:
                 console.log("Data succefully Deleted");
@@ -85,6 +86,7 @@ export async function sendWork(imgFile, title, cat) {
     
         const response = await fetchAPI('works', data);
         await refreshCache('works');
+        return response;
     }
 }
 

@@ -154,11 +154,18 @@ async function deleteFromGallery(id) {
     modalStatus('close');
 }
 // FUNCTIONS - MODAL - UPLOAD ZONE
-export function uploadPreview() {
-    //CHECK THE FILE
+export function uploadPreview(event) {
+    //REPLACE OLD PREVIEW IF THERE IS
+    const oldPreview = document.getElementById('upload-preview');
+    if(oldPreview) {
+        oldPreview.remove();
+    }
     const preview = document.createElement('img');
     preview.src = URL.createObjectURL(imgUploadBtn.files[0]);
     preview.id = 'upload-preview';
+    preview.addEventListener('click', ()=>{
+        event.target.click();
+    });
     imgUploadContainer.classList.add('preview');
     imgUploadContainer.appendChild(preview);
 }

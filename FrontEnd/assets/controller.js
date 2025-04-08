@@ -66,12 +66,13 @@ export function inputValidator(field) {
 export async function uploadValidation(img, title, cat) {
     const uploadedImg = img.files[0];
     if(!uploadedImg) {
-        showErrMsg(img, "Doit y avoir une image");
+        showErrMsg(img, "Image manquante");
     } else if (uploadedImg.size/1000000 > 4) {
-        showErrMsg(img, "Img too big");
-    }
-    else if(title.value === '') {
-        showErrMsg(title, "Pas de titre ?");
+        showErrMsg(img, "Fichier trop lourd (>4Mo)");
+    } else if (uploadedImg.type !== "image/png" && uploadedImg.type !== "image/jpeg") {
+        showErrMsg(img, "Format d'image incorrect (PNG ou JPEG)");
+    } else if(title.value === '') {
+        showErrMsg(title, "Titre manquant");
     } else {
         const success = await sendWork(uploadedImg, title.value, cat.value);
         return success;

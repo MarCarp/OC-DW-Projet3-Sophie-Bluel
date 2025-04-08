@@ -14,10 +14,8 @@ const sendWorkBtn = modal.querySelector('#send-work-btn');
 const addWorkBtn = modal.querySelector('#add-work-btn');
 const imgUploadBtn = document.getElementById('upload-work');
 
-/////////////////////////////////////////////////////// TOSORT ///////////////////////////////////////////////////////
 const uploadTitle = document.getElementById('add-work-title');
 const uploadCategory = document.getElementById('add-work-category');
-////////////////////////////////////////////////////////// ITOSORTN //////////////////////////////////////////////////////////
 
 ////////////////// EVENT LISTENERS ////////////////
 // EL - LOGOUT
@@ -42,11 +40,13 @@ backtn.addEventListener('click', ()=>modalNav('gallery'));
 addWorkBtn.addEventListener('click', ()=>modalNav('add-work'));
 //EL - MODAL UPLOAD ZONE
 // EL - LOAD IMG PREVIEW
-imgUploadBtn.addEventListener("change", uploadPreview);
+imgUploadBtn.addEventListener("change", (e)=>uploadPreview(e));
 // EL - UPLOAD BTN
 sendWorkBtn.addEventListener('click', async ()=>{
-    await uploadValidation(imgUploadBtn, uploadTitle, uploadCategory);
-    sendWorkDone();
+    const success = await uploadValidation(imgUploadBtn, uploadTitle, uploadCategory);
+    if(success) {
+        sendWorkDone();
+    }
 });
 
 ///////////////////// LOAD PAGE ///////////////////
