@@ -2,7 +2,7 @@ import { inputValidator, showErrMsg } from "./controller.js";
 import { logging } from "./api.js";
 
 // DOM
-const submitBtn = document.querySelector('#login [type=submit]');
+const submitBtn = document.querySelector('#login-container [type=submit]');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 

@@ -161,13 +161,19 @@ export function uploadPreview(event) {
         oldPreview.remove();
     }
     const preview = document.createElement('img');
-    preview.src = URL.createObjectURL(imgUploadBtn.files[0]);
-    preview.id = 'upload-preview';
-    preview.addEventListener('click', ()=>{
-        event.target.click();
-    });
-    imgUploadContainer.classList.add('preview');
-    imgUploadContainer.appendChild(preview);
+    if(imgUploadBtn.files[0]) {
+        preview.src = URL.createObjectURL(imgUploadBtn.files[0]);
+        preview.id = 'upload-preview';
+        preview.addEventListener('click', ()=>{
+            event.target.click();
+        });
+        imgUploadContainer.classList.add('preview');
+        imgUploadContainer.appendChild(preview);
+    } else {
+        if(imgUploadContainer.classList.contains('preview')) {
+            imgUploadContainer.classList.remove('preview')
+        }
+    }
 }
 
 //Clear the Upload Zone when closing Modal or Data Sent

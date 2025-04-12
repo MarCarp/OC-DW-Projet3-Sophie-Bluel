@@ -52,6 +52,8 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	min-height: calc(100vh - 50px);
+	background-color: #FFFEF8;
 }
 header {
 	display: flex;
@@ -93,6 +95,10 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+
+nav li img {
+	width: 20px;
 }
 
 nav li a {
@@ -242,11 +248,20 @@ input[type="submit"]:hover {
 	background-color: #0E2F28;
 }
 
-#login input[type="submit"] {
+#login-container {
+	margin: 15% auto 40%;
+}
+
+#login-container input[type="submit"] {
 	margin-bottom: 0;
 }
-#login input[type="submit"]+.error-msg {
+#login-container input[type="submit"]+.error-msg {
 	text-align: center;
+}
+
+#login-container .missing-mail {
+	text-align: center;
+	color: #000;
 }
 
 footer nav ul {
